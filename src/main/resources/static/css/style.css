@@ -1,0 +1,25 @@
+@charset "UTF-8";
+.logo {
+	font-family: 'Leckerli One', cursive;
+	font-weight: lighter;
+	font-size:50px;
+}
+header {
+	height:100px;
+}
+
+.contents {
+	font-family: 'Noto Sans KR', sans-serif;
+	height:550px;
+}
+
+#idCheckBtn {
+	background-color:white;
+}
+
+#signUpForm {
+}
+
+footer {
+	height:100px;
+}
