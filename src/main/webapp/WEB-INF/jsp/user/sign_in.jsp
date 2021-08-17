@@ -24,18 +24,54 @@
 </head>
 <body>
 	<div id="wrap" class="container">
-		<header>
-			<jsp:include page="../include/header.jsp" />
-		</header>
-		<nav>
-			<jsp:include page="../include/gnb.jsp" />
-		</nav>
-		<section class="contents">
-			<jsp:include page="../${viewName}.jsp" />
+		<header></header>
+		<nav></nav>
+		<section>
+			<div class="d-flex justify-content-center">
+				<div class="col-4">
+					<h1 class="logo text-center mt-3 mb-3">Inssagram</h1>
+					<form id="loginForm" method="post" action="/user/sign_in">
+						<input type="text" id="loginId" name="loginId" class="form-control" placeholder="아이디">
+						<input type="password" id="password" name="password" class="mt-2 form-control" placeholder="비밀번호">
+						
+						<button type="submit" id="loginBtn" class="mt-3 btn btn-primary w-100">로그인</button>
+					</form>
+					<div class="mt-2 text-center"><a href="/user/sign_up_view">계정이 없으신가요? 회원가입</a></div>
+				</div>
+			</div>
 		</section>
-		<footer class="d-flex justify-content-center align-items-center">
-			<jsp:include page="../include/footer.jsp" />
-		</footer>
+		
+		<script>
+			$(document).ready(function() {
+				$('#loginForm').submit(function(e) {
+					e.preventDefault();
+					
+					let loginId = $('#loginId').val().trim();
+					let password = $('#password').val().trim();
+					if (loginId == '') {
+						alert("아이디를 입력해주세요.");
+						return;
+					}
+					if (password == '') {
+						alert("비밀번호를 입력해주세요.");
+						return;
+					}
+					
+					let url = $(this).attr('action');
+					let datas = $(this).serialize();
+					
+					$.post(url, datas).done(function(data) {
+						if (data.result == 'success') {
+							location.href="/post/post_list_view";
+						} else {
+							alert("로그인에 실패했습니다. 다시 시도해주세요.");
+						}
+					});
+				});
+				
+			});
+		</script>
 	</div>
 </body>
 </html>
+		
