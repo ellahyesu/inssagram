@@ -25,7 +25,7 @@
 <body>
 	<div id="wrap" class="container">
 		<header></header>
-		<nav></nav>
+		<nav class="navBar"></nav>
 		<section>
 			<div class="d-flex justify-content-center">
 				<div class="col-4">
