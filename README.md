@@ -5,7 +5,7 @@
 </p>
 <h3 align="center">2. 로그인 페이지</h3>
 <p align="center">
-  <img width="90%" src="https://user-images.githubusercontent.com/69390318/129830947-7886eb2d-be6c-4af3-b794-1b573e943d76.gif"/>
+  <img width="90%" src="https://user-images.githubusercontent.com/69390318/129861421-d0df634d-ab9b-450d-a998-f0cf9ceb9e6d.gif"/>
 </p>
 <h3 align="center">3. 글 쓰기 페이지</h3>
 <h3 align="center">4. 글 목록 페이지(댓글 쓰기, 좋아요)</h3>
