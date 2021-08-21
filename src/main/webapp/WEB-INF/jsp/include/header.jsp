@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="d-flex justify-content-between mt-3">
-	<h1 class="logo">Inssagram</h1>
+	<a href="/timeline/timeline_view"><h1 class="logo">Inssagram</h1></a>
 	<div class="d-flex justify-content-center align-items-center col-8">
 	<div class="d-flex col-8 input-group">
 		<input type="text" id="searchTag" name="searchTag" class="form-control" placeholder="검색">
@@ -15,10 +15,10 @@
 		<%-- 로그인이 된 경우 --%>
 		<c:if test="${not empty userName}">
 			<div class="d-flex align-items-center"> 
-				<img src="${userProfileImageFile}" class="profileImage">
+				<a href="/mypage/mypage_view"><img src="${userProfileImageFile}" class="profileImage"></a>
 			</div>
 			<div class="d-flex align-items-end mb-2">
-				<small><a href="/user/sign_out">로그아웃</a></small>
+				<small><a href="/user/sign_out" id="logout">로그아웃</a></small>
 			</div>
 		</c:if>
 		

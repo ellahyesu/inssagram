@@ -25,7 +25,7 @@
 <body>
 	<div id="wrap" class="container">
 		<header></header>
-		<nav class="navBar"></nav>
+		<nav class="nav-bar"></nav>
 		<section>
 			<div class="d-flex justify-content-center">
 				<div class="col-4">
@@ -36,7 +36,7 @@
 						
 						<button type="submit" id="loginBtn" class="mt-3 btn btn-primary w-100">로그인</button>
 					</form>
-					<div class="mt-2 text-center"><a href="/user/sign_up_view">계정이 없으신가요? 회원가입</a></div>
+					<div class="mt-2 text-center"><a href="/user/sign_up_view" class="text-primary">계정이 없으신가요? 회원가입</a></div>
 				</div>
 			</div>
 		</section>

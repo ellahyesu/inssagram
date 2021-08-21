@@ -34,7 +34,12 @@
 			<jsp:include page="../include/gnb.jsp" />
 		</nav>
 		<section class="contents">
-			<jsp:include page="../${viewName}.jsp" />
+			<section>
+				<jsp:include page="../${viewName}.jsp" />
+			</section>
+			<aside>
+			
+			</aside>
 		</section>
 		<footer class="d-flex justify-content-center align-items-center">
 			<jsp:include page="../include/footer.jsp" />
