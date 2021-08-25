@@ -1,4 +1,4 @@
-package com.inssagram.timeline.model;
+package com.inssagram.post.model;
 
 import java.util.Date;
 

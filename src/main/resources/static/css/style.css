@@ -27,7 +27,7 @@ header {
 #searchBar {
 	height:50px;
 }
-#searchTagBtn {
+#searchWordBtn {
 	background-color: #ED4956;
 	color:white;
 }
@@ -51,19 +51,29 @@ header {
 	color: white;
 }
 
+
+
 @keyframes motion {
-	0% {margin-buttom: 0px;}
-	100% {margin-buttom: 5px;}
+	0% {margin-top: 0px;}
+	50% {margin-top: 5px;}
+}
+#moreArea{
+	height: 30px;
+}
+#moreBtn {
+	background-color: transparent;
+	position: absolute;
 }
 .more-btn {
-	animation: motion 0.5s linear 0s infinite alternate; margin-top: 0;
-	-webkit-animation: motion 0.5s linear 0s infinite alternate; margin-top: 0;
-	font-size:30px;
+	position: relative;
+	
+	animation: motion 0.7s linear 0s infinite alternate; margin-top: 0;
+	-webkit-animation: motion 0.7s linear 0s infinite alternate; margin-top: 0;
+	font-size:28px;
 
 	background: linear-gradient(to right top, #F5CF75, #ED4956, #8239C1);
     color: transparent;
     -webkit-background-clip: text;
-	
 }
 .more-btn:hover {
 }
@@ -107,10 +117,17 @@ textarea {
 	width:470px;
 	border: 2px solid #E7E9EC;
 }
+.mypage-post-box {
+	width:470px;
+	border: 2px solid #E7E9EC;
+}
 .post-box {
 	width:470px;
-	
 	border: 2px solid #E7E9EC;
+}
+.post-edit-image {
+	width:130px;
+	height:130px;
 }
 .post-image {
 	width:450px;
@@ -119,7 +136,7 @@ textarea {
 #editBtn {
 	background-color:transparent;
 }
-#deleteBtn {
+.delete-icon {
 	background-color:transparent;
 }
 #idCheckBtn {
@@ -128,7 +145,7 @@ textarea {
 #likeBtn {
 	background-color:transparent;
 }
-#commentBtn{
+.comment-btn{
 	background-color:transparent;
 }
 
