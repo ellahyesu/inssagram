@@ -10,18 +10,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.inssagram.timeline.bo.PostBO;
-import com.inssagram.timeline.model.Post;
+import com.inssagram.timeline.bo.ContentBO;
+import com.inssagram.timeline.model.Content;
 
 @RequestMapping("/timeline")
 @Controller
 public class TimelineController {
 
 	@Autowired
-	private PostBO postBO;
+	private ContentBO contentBO;
 	
 	@RequestMapping("/timeline_view")
-	public String postListView(
+	public String timelineView(
 			HttpServletRequest request
 			, Model model) {
 		HttpSession session = request.getSession();
@@ -31,8 +31,8 @@ public class TimelineController {
 			return "redirect:/user/sign_in_view";
 		}
 		
-		List<Post> postList = postBO.getPostListByUserId(userId);
-		model.addAttribute("postList", postList);
+		List<Content> contentList = contentBO.getContentList();
+		model.addAttribute("contentList", contentList);
 		
 		model.addAttribute("viewName", "timeline/timeline");
 		return "template/layout";
