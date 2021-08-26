@@ -31,7 +31,7 @@ public class TimelineController {
 			return "redirect:/user/sign_in_view";
 		}
 		
-		List<Content> contentList = contentBO.getContentList();
+		List<Content> contentList = contentBO.getContentList(userId);
 		model.addAttribute("contentList", contentList);
 		
 		model.addAttribute("viewName", "timeline/timeline");

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.inssagram.comment.bo.CommentBO;
 import com.inssagram.comment.model.Comment;
+import com.inssagram.like.bo.LikeBO;
+import com.inssagram.like.model.Like;
 import com.inssagram.post.bo.PostBO;
 import com.inssagram.post.model.Post;
 import com.inssagram.timeline.model.Content;
@@ -26,7 +28,10 @@ public class ContentBO {
 	@Autowired
 	private CommentBO commentBO;
 	
-	public List<Content> getContentList() {
+	@Autowired
+	private LikeBO likeBO;
+	
+	public List<Content> getContentList(int userId) {
 		
 		List<Content> contentList = new ArrayList<>();
 		
@@ -36,15 +41,30 @@ public class ContentBO {
 			Content content = new Content();
 			content.setPost(post);
 			
-			// User추가 - 프로필사진
+			// User - 프로필사진
 			String userName = post.getUserName();
 			User user = userBO.getUserByUserName(userName);
 			content.setUser(user);
 			
-			// Post의 댓글 - Comment 목록
+			// Post 의 댓글 - Comment 목록
 			int postId = post.getId();
 			List<Comment> commentList = commentBO.getCommentListByPostId(postId);
 			content.setCommentList(commentList);
+
+			// 나의 좋아요 여부
+			Like like = likeBO.getLikeByUserIdAndPostId(userId, postId);
+			
+			if (like != null) {
+				if (userId == like.getUserId()) {
+					content.setFilledLike(true);
+				} else {
+					content.setFilledLike(false);
+				}
+			}
+			
+			// 좋아요 개수
+			int likeCount = likeBO.getLikeCountByPostId(postId);
+			content.setLikeCount(likeCount);
 			
 			contentList.add(content);
 		}

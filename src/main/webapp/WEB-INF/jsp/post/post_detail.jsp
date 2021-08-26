@@ -3,6 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>    
+
+
+
 <div class="d-flex justify-content-center">
 	<div>
 		<div class="post-box mt-4">
@@ -16,9 +19,9 @@
 			
 			<div class="d-flex justify-content-between m-2">
 				<div class="d-flex">
-					<input type="file" id="file" name="file" class="d-none" accept=".jpg, .jpeg, .gif, .png">
+					<input type="file" id="editFile" name="editFile" class="d-none" accept=".jpg, .jpeg, .gif, .png">
 					<button type="button" id="imageUploadBtn" class="btn"><i id="imageUploadIcon" class="fas fa-image"></i></button>
-					<div id="fileName" class="d-flex align-items-center"></div>
+					<div id="editFileName" class="d-flex align-items-center"></div>
 				</div>
 				<button type="button" id="writingUploadBtn" class="btn text-primary" data-post-id="${post.id}"><b>업로드</b></button>
 			</div>
@@ -33,13 +36,13 @@
 		// 파일 업로드 아이콘 클릭 => 사용자가 파일 업로드를 할 수 있게 해줌.
 		$('#imageUploadBtn').on('click', function(e) {
 			e.preventDefault();
-			$('#file').click(); // input file 태그를 클릭한 것과 같은 동작.
+			$('#editFile').click(); // input file 태그를 클릭한 것과 같은 동작.
 		});
 		
 		// 사용자가 파일 업로드를 했을 때 파일명 보여주기
-		$('#file').on('change', function(e) {
+		$('#editFile').on('change', function(e) {
 			let fileName = e.target.files[0].name;
-			$('#fileName').text(fileName);
+			$('#editFileName').text(fileName);
 		});
 		
 		// 업로드(수정)버튼 클릭 시
@@ -51,7 +54,7 @@
 				return;
 			}
 			
-			let file = $('#file').val();
+			let file = $('#editFile').val();
 			if (file != '') {
 				let ext = file.split('.').pop().toLowerCase();
 				if ($.inArray(ext, ['jpg', 'jpeg', 'gif', 'png']) == -1) {
@@ -64,7 +67,7 @@
 			let formData = new FormData();
 			formData.append("id", $(this).data('post-id'));
 			formData.append("content", content);
-			formData.append("file", $('#file')[0].files[0]);
+			formData.append("file", $('#editFile')[0].files[0]);
 			
 			// $('input[name=image]')[0]  => 첫번째 input file 태그를 의미
 			// .files[0]                  => 업로드 된 파일 중 첫번째를 의미

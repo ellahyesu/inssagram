@@ -36,6 +36,10 @@ public class PermissionInterceptor implements HandlerInterceptor {
 		
 		// 로그인 && /user => 포스트 리스트 페이지로 리다이렉트
 		if (userLoginId != null && uri.startsWith("/user")) {
+			
+			if (uri.contains("update_profile_image")) {
+				return true;
+			}
 			response.sendRedirect("/timeline/timeline_view");
 			return false;
 		}

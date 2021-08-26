@@ -3,7 +3,6 @@ package com.inssagram.timeline.model;
 import java.util.List;
 
 import com.inssagram.comment.model.Comment;
-import com.inssagram.like.model.Like;
 import com.inssagram.post.model.Post;
 import com.inssagram.user.model.User;
 
@@ -18,13 +17,10 @@ public class Content { // Content 1개를 구성하고 있는 것들(글, 댓글
 	// post - 댓글 N개
 	private List<Comment> commentList;
 	
-	// post - 좋아요 N개
-	private List<Like> likeList;
-	
-	// 좋아요 개수
+	// Like - 좋아요 N개
 	private int likeCount;
 	
-	private boolean isFilledLike; // userId(나) - post 좋아요
+	private boolean filledLike; // userId(나) - post 좋아요
 
 	public User getUser() {
 		return user;
@@ -50,14 +46,6 @@ public class Content { // Content 1개를 구성하고 있는 것들(글, 댓글
 		this.commentList = commentList;
 	}
 
-	public List<Like> getLikeList() {
-		return likeList;
-	}
-
-	public void setLikeList(List<Like> likeList) {
-		this.likeList = likeList;
-	}
-
 	public int getLikeCount() {
 		return likeCount;
 	}
@@ -67,11 +55,11 @@ public class Content { // Content 1개를 구성하고 있는 것들(글, 댓글
 	}
 
 	public boolean isFilledLike() {
-		return isFilledLike;
+		return filledLike;
 	}
 
-	public void setFilledLike(boolean isFilledLike) {
-		this.isFilledLike = isFilledLike;
+	public void setFilledLike(boolean filledLike) {
+		this.filledLike = filledLike;
 	}
-	
+
 }

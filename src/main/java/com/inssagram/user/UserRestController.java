@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.inssagram.common.EncryptUtils;
 import com.inssagram.user.bo.UserBO;
@@ -84,6 +85,27 @@ public class UserRestController {
 			result.put("result", "fail");
 		}
 		
+		return result;
+	}
+	
+	@PostMapping("/update_profile_image")
+	public Map<String, String> userProfileImageUpdate(
+			@RequestParam("id") int id
+			, @RequestParam(value="file", required=false) MultipartFile file
+			, HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		String userLoginId = (String) session.getAttribute("userLoginId");
+		
+		int row = userBO.updateUserByProfileImageFile(id, userLoginId, file);
+		// 결과 리턴
+		Map<String, String> result = new HashMap<>();
+		
+		if (row > 0) {
+			result.put("result", "success");
+		} else {
+			result.put("result", "fail");
+		}
 		return result;
 	}
 }

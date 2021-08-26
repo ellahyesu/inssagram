@@ -3,26 +3,34 @@
 * {
 	font-family: 'Noto Sans KR', sans-serif;
 }
-.logo {
-	font-family: 'Leckerli One', cursive;
-	font-weight: lighter;
-	font-size:50px;
-	
-}
-.logo:hover {
-	background: linear-gradient(to right top, #F5CF75, #ED4956, #8239C1);
-    color: transparent;
-    -webkit-background-clip: text;
-}
 a, a:hover {
 	text-decoration:none;
 	color: inherit;
 }
+
+/* 회원가입 - 아이디 중복 체크 */
+#idCheckBtn {
+	background-color:transparent;
+}
+
+/* header - 로고, 검색, 프로필사진, 로그인여부 */
 header {
 	height:100px;
 }
-#logout:hover {
-	color:#ED4956;
+.logo {
+	font-family: 'Leckerli One', cursive;
+	font-size:50px;
+	
+	background: linear-gradient(to right top, #F5CF75, #ED4956, #8239C1);
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+}
+.logo:hover {
+	background: linear-gradient(to right top, #F5CF75, #ED4956, #8239C1);
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
 }
 #searchBar {
 	height:50px;
@@ -31,58 +39,20 @@ header {
 	background-color: #ED4956;
 	color:white;
 }
-.nav-bar {
-	height:50px;
-}
-.user-login-id {
-	font-size:20px;
-}
-.mypage-image {
-	width:140px;
-	height:140px;
-}
-#profileEditBtn {
-	width:95%;
+
+/* header - 프로필사진 */
+.empty-profile {
 	background-color: transparent;
-	border: 1px solid #E7E9EC;
 }
-#profileEditBtn:hover {
-	background-color: black;
-	color: white;
+#userIcon {
+	color:#6C757D;
 }
-
-
-
-@keyframes motion {
-	0% {margin-top: 0px;}
-	50% {margin-top: 5px;}
-}
-#moreArea{
-	height: 30px;
-}
-#moreBtn {
-	background-color: transparent;
-	position: absolute;
-}
-.more-btn {
-	position: relative;
-	
-	animation: motion 0.7s linear 0s infinite alternate; margin-top: 0;
-	-webkit-animation: motion 0.7s linear 0s infinite alternate; margin-top: 0;
-	font-size:28px;
-
-	background: linear-gradient(to right top, #F5CF75, #ED4956, #8239C1);
-    color: transparent;
-    -webkit-background-clip: text;
-}
-.more-btn:hover {
-}
-.profileImage {
+.profile-image {
 	width:50px;
 	height:50px;
 	border-radius:50%;
 	border: 3px solid transparent;
-	background-image: linear-gradient(#444444, #444444), linear-gradient(to right top, #F5CF75, #ED4956, #8239C1);
+	background-image: linear-gradient(white, white), linear-gradient(to right top, #F5CF75, #ED4956, #8239C1);
     background-origin: border-box;
     background-clip: content-box, border-box;
 }
@@ -91,12 +61,47 @@ header {
 	height:100px;
 	border-radius:50%;
 	border: 3px solid transparent;
-	background-image: linear-gradient(#444444, #444444), linear-gradient(to right top, #F5CF75, #ED4956, #8239C1);
+	background-image: linear-gradient(white, white), linear-gradient(to right top, #F5CF75, #ED4956, #8239C1);
     background-origin: border-box;
     background-clip: content-box, border-box;
 }
-.contents {
 
+/* header - 로그인 여부 */
+#logout:hover {
+	color:#ED4956;
+}
+
+/* gnb */
+.nav-bar {
+	height:50px;
+}
+.user-login-id {
+	font-size:20px;
+}
+
+/* mypage */
+.mypage-image {
+	width:140px;
+	height:140px;
+}
+#profileEdit {
+	width:95%;
+	background-color: transparent;
+	border: 1px solid #E7E9EC;
+}
+#profileEdit:hover {
+	background-color: black;
+	color: white;
+}
+.mypage-post-box {
+	width:470px;
+	border: 2px solid #E7E9EC;
+}
+
+/* section - 글 쓰기 */
+.writing-box {
+	width:470px;
+	border: 2px solid #E7E9EC;
 }
 textarea {
     border: none;
@@ -113,49 +118,74 @@ textarea {
 #writingUploadBtn {
 	background-color:transparent;
 }
-.writing-box {
-	width:470px;
-	border: 2px solid #E7E9EC;
-}
-.mypage-post-box {
-	width:470px;
-	border: 2px solid #E7E9EC;
-}
+
+/* section - 글 목록 */
 .post-box {
 	width:470px;
 	border: 2px solid #E7E9EC;
-}
-.post-edit-image {
-	width:130px;
-	height:130px;
 }
 .post-image {
 	width:450px;
 	height:400px;
 }
+
+/* section - 글 수정, 글 삭제 */
 #editBtn {
 	background-color:transparent;
+}
+.post-edit-image {
+	width:130px;
+	height:130px;
 }
 .delete-icon {
 	background-color:transparent;
 	color:red;
 }
-#idCheckBtn {
+
+/* section - 글 - 좋아요 */
+.post-mylike-btn {
 	background-color:transparent;
+	color: #ED4956;
 }
-#likeBtn {
-	background-color:transparent;
-}
-.comment-btn{
+.post-like-btn {
 	background-color:transparent;
 }
 
+/* section - 글 - 댓글 */
+.comment-btn{
+	background-color:transparent;
+}
 .comment-del-btn {
 	background-color:transparent;
 	font-size:12px;
 	color:red;
 }
 
+/* section - (하단)더보기 버튼 */
+@keyframes motion {
+	0% {margin-top: 0px;}
+	50% {margin-top: 5px;}
+}
+.more-btn {
+	position: relative;
+	
+	animation: motion 0.7s linear 0s infinite alternate; margin-top: 0;
+	-webkit-animation: motion 0.7s linear 0s infinite alternate; margin-top: 0;
+	font-size:28px;
+
+	background: linear-gradient(to right top, #F5CF75, #ED4956, #8239C1);
+    color: transparent;
+    -webkit-background-clip: text;
+}
+#moreArea{
+	height: 30px;
+}
+#moreBtn {
+	background-color: transparent;
+	position: absolute;
+}
+
+/* footer */
 footer {
 	height:100px;
 }

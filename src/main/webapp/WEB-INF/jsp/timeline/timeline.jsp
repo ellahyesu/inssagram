@@ -20,17 +20,35 @@
 			</div>
 		</div>
 		
-		<c:forEach var="content" items="${contentList}" varStatus="status">
+		<c:forEach var="content" items="${contentList}">
 			<div class="post-box mt-4">
 				<div class="d-flex justify-content-between post-header m-2">
 					<div class="d-flex">
-						<div><img src="${content.user.profileImageFile}" class="profileImage mr-2"></div>
+					
+						<c:if test="${not empty content.user.profileImageFile}">
+							<div><img src="${content.user.profileImageFile}" class="profile-image mr-2"></div>
+						</c:if>
+						<c:if test="${empty content.user.profileImageFile}">
+							<div><i id="userIcon" class="d-flex justify-content-center align-items-center fas fa-user profile-image mr-2"></i></div>
+						</c:if>
+								
 						<div class="d-flex align-items-center"><b>${content.post.userName}</b></div>
+						
+						<%-- 글쓴이가 본인이 아니면 팔로우 버튼 노출 --%>
+						<c:if test="${userName ne content.user.name}">
+							<%-- TODO: 팔로우를 한 사람이면 팔로우 취소 버튼 노출 --%>
+							
+							<a href="#" class="ml-2 d-flex align-items-center text-primary"><b>· 팔로우</b></a>
+						</c:if>
 					</div>
+					<%-- 본인이면 글 수정, 글삭제 버튼 노출 --%>
+					<c:if test="${userName eq content.user.name}">
 					<div>
 						<a href="/post/post_detail_view?id=${content.post.id}"><button type="button" id="editBtn" class="btn"><i class="fas fa-edit"></i></button></a>
+						<%-- Modal --%>
 						<button type="button" class="btn delete-icon" data-toggle="modal" data-target="#deleteModal" data-post-id="${content.post.id}"><i class="far fa-trash-alt"></i></button>
 					</div>
+					</c:if>
 				</div>
 				<div class="m-2">
 					<c:if test="${!empty content.post.imagePath}">
@@ -38,8 +56,18 @@
 					</c:if>
 				</div>
 				<div class="d-flex post-function ml-2">
-					<button type="button" id="likeBtn" class="btn"><i class="far fa-heart"></i></button>
-					<div class="d-flex align-items-center">좋아요 100개</div>
+				
+					<%-- 본인 좋아요 여부에 따른 꽉찬하트 | 빈하트 --%>
+					<c:choose>
+						<c:when test="${content.filledLike eq true}">
+							<button type="button" class="post-mylike-btn btn" data-post-id="${content.post.id}"><i class="fas fa-heart"></i></button>
+						</c:when>
+						<c:otherwise>
+							<button type="button" class="post-like-btn btn" data-post-id="${content.post.id}"><i class="far fa-heart"></i></button>
+						</c:otherwise>
+					</c:choose>
+		
+					<div class="d-flex align-items-center">좋아요 ${content.likeCount}개</div>
 				</div>
 				
 				<%-- 글(Post) --%>
@@ -48,18 +76,21 @@
 				<%-- 댓글(Comment) 목록 --%>
 				<%-- "댓글" - 댓글이 있는 경우에만 댓글 영역 노출 --%>
 				<c:if test="${not empty content.commentList}">
-					<div class="ml-3 text-secondary"><a href="#" class="show-comment">댓글 모두 숨기기</a></div>
-					<div class="comments">
-					<c:forEach var="comment" items="${content.commentList}">
-					<div class="ml-3 d-flex">
-						<div class="mr-2 d-flex align-items-center"><b>${comment.userName}</b></div>
-						<div class="d-flex align-items-center">${comment.content}</div>
-						<%-- 댓글쓴이가 본인이면 삭제버튼 노출 --%>
-						<c:if test="${userName eq comment.userName}">
-							<button type="button" class="btn comment-del-btn" data-comment-id="${comment.id}"><i class="fas fa-backspace"></i></button>
-						</c:if>
-					</div>
-					</c:forEach>
+						
+					<%-- 댓글 모두 보기 | 숨기기 토글 버튼 구현 --%>
+					<a href="#" class="show-comment-link ml-3 text-secondary" data-post-id="${content.post.id}">댓글 모두 숨기기</a>
+					
+					<div>
+						<c:forEach var="comment" items="${content.commentList}">
+							<div class="d-flex ml-3">
+								<div class="mr-2 d-flex align-items-center"><b>${comment.userName}</b></div>
+								<div class="d-flex align-items-center">${comment.content}</div>
+								<%-- 댓글쓴이가 본인이면 삭제버튼 노출 --%>
+								<c:if test="${userName eq comment.userName}">
+									<button type="button" class="btn comment-del-btn" data-comment-id="${comment.id}"><i class="fas fa-backspace"></i></button>
+								</c:if>
+							</div>
+						</c:forEach>
 					</div>
 				</c:if>
 				
@@ -209,18 +240,21 @@
 			});
 		});
 		
-		// 댓글 모두 보기 | 숨기기
-		$('.show-comment').on('click', function(e) {
+		// 댓글 모두 보기 | 숨기기 토글 버튼
+		$('.show-comment-link').on('click', function(e) {
 			e.preventDefault();
+
+			//let postId = $(this).data('post-id');
+			//alert(postId);
+			let brother = $(e.target).next();
 			
-			if ($('.comments').hasClass("d-none")) {
-				$('.comments').removeClass("d-none");
+			if ($(brother).hasClass("d-none")) {
+				$(brother).removeClass("d-none");
 				$(this).text('댓글 모두 숨기기');
 			} else {
-				$('.comments').addClass("d-none");
+				$(brother).addClass("d-none");
 				$(this).text('댓글 모두 보기');
 			}
-			
 		});
 		
 		// 댓글 삭제
@@ -240,6 +274,44 @@
 					}
 				}, error: function(e) {
 					alert("댓글 삭제에 실패했습니다. 관리자에게 문의해주세요.");
+				}
+			});
+		});
+		
+		// 좋아요 누르기
+		$('.post-like-btn').on('click', function() {
+			
+			$.ajax({
+				url: '/like/create'
+				, method: 'post'
+				, data: {
+					"postId" : $(this).data('post-id')
+				}, success: function(data) {
+					if (data.result == 'success') {
+						alert("좋아요!");
+						location.reload();
+					}
+				}, error: function(e) {
+					alert("좋아요에 실패했습니다. 관리자에게 문의해주세요.");
+				}
+			});
+		});
+		
+		// 좋아요 취소하기
+		$('.post-mylike-btn').on('click', function() {
+			
+			$.ajax({
+				url: '/like/delete'
+				, method: 'post'
+				, data: {
+					"postId" : $(this).data('post-id')
+				}, success: function(data) {
+					if (data.result == 'success') {
+						alert("좋아요를 취소 하였습니다.");
+						location.reload();
+					}
+				}, error: function(e) {
+					alert("좋아요 취소에 실패했습니다. 관리자에게 문의해주세요.");
 				}
 			});
 		});

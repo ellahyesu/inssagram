@@ -36,6 +36,7 @@
 			, `updatedAt`
 		FROM 
 			`post`
+		ORDER BY `id` DESC
 	</select>
 	
 	<select id="selectPostListByUserId" parameterType="int" resultType="com.inssagram.post.model.Post">
@@ -68,6 +69,7 @@
 		WHERE 
 			`id` = #{id}
 			AND `userId` = #{userId}
+		ORDER BY `id` DESC
 	</select>
 	
 	<update id="updatePost" parameterType="map">

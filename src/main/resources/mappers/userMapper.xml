@@ -3,6 +3,27 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.inssagram.user.dao.UserDAO">
+	
+	<insert id="insertUser" parameterType="map">
+		INSERT INTO `user`
+		(
+			`loginId`
+			, `password`
+			, `name`
+			, `email`
+			, `createdAt`
+			, `updatedAt`
+		)
+		VALUES
+		(
+			#{loginId}
+			, #{password}
+			, #{name}
+			, #{email}
+			, NOW()
+			, NOW()
+		)
+	</insert>
 
 	<select id="selectUserByLoginId" parameterType="string" resultType="com.inssagram.user.model.User">
 		SELECT
@@ -36,26 +57,33 @@
 			`loginId` = #{loginId}
 			AND `password` = #{password}
 	</select>
-
-	<insert id="insertUser" parameterType="map">
-		INSERT INTO `user`
-		(
-			`loginId`
+	
+	<select id="selectUserByUserName" parameterType="string" resultType="com.inssagram.user.model.User">
+		SELECT
+			`id`
+			, `loginId`
 			, `password`
 			, `name`
 			, `email`
+			, `profileImageFile`
 			, `createdAt`
 			, `updatedAt`
-		)
-		VALUES
-		(
-			#{loginId}
-			, #{password}
-			, #{name}
-			, #{email}
-			, NOW()
-			, NOW()
-		)
-	</insert>
+		FROM
+			`user`
+		WHERE
+			`name` = #{name}
+	</select>
 
+	<update id="updateUserByProfileImageFile" parameterType="map">
+		UPDATE `user`
+		SET 
+			`updatedAt` = NOW()
+			<!-- profileImageFile가 null이 아닐 때만 수정한다. -->
+			<if test="profileImageFile != null">
+			, `profileImageFile` = #{profileImageFile}
+			</if>
+		WHERE
+			`id` = #{id}
+	</update>
+	
 </mapper>
