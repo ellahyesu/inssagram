@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,9 +27,9 @@ public class LikeRestController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping("/create")
+	@RequestMapping("/{postId}")
 	public Map<String, String> likeCreate(
-			@RequestParam("postId") int postId
+			@PathVariable int postId
 			, HttpServletRequest request) {
 		
 		HttpSession session = request.getSession();
@@ -54,6 +55,12 @@ public class LikeRestController {
 		return result;
 	}
 	
+	/**
+	 * 좋아요 취소하기
+	 * @param postId
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping("/delete")
 	public Map<String, String> likeDelete(
 			@RequestParam("postId") int postId
@@ -70,7 +77,7 @@ public class LikeRestController {
 			return result;
 		}
 		
-		// DB
+		// DB delete
 		likeBO.deleteLike(userId, postId);
 		
 		// return result

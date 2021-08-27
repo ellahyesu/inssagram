@@ -28,4 +28,8 @@ public class LikeBO {
 		likeDAO.deleteLike(userId, postId);
 	}
 	
+	public void deleteLikeByPostId(int postId) {
+		likeDAO.deleteLikeByPostId(postId);
+	}
+	
 }

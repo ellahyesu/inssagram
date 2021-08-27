@@ -2,6 +2,7 @@ package com.inssagram.comment.bo;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,8 +27,12 @@ public class CommentBO {
 		return commentDAO.selectCommentListByPostId(postId);
 	}
 	
-	public void deleteComment(int id) {
-		commentDAO.deleteComment(id);
+	public void deleteCommentById(int id) {
+		commentDAO.deleteCommentById(id);
+	}
+	
+	public void deleteCommentByPostId(@Param("postId") int postId) {
+		commentDAO.deleteCommentByPostId(postId);
 	}
 	
 }

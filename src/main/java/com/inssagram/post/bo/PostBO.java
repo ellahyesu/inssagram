@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.inssagram.comment.dao.CommentDAO;
 import com.inssagram.common.FileManagerService;
+import com.inssagram.like.dao.LikeDAO;
 import com.inssagram.post.dao.PostDAO;
 import com.inssagram.post.model.Post;
 
@@ -20,6 +22,12 @@ public class PostBO {
 
 	@Autowired
 	private PostDAO postDAO;
+	
+	@Autowired
+	private CommentDAO commentDAO;
+	
+	@Autowired
+	private LikeDAO likeDAO;
 	
 	@Autowired
 	private FileManagerService fileManagerService;
@@ -41,7 +49,7 @@ public class PostBO {
 	public Post getPostByPostIdAndUserId(int id, int userId) {
 		return postDAO.selectPostByPostIdAndUserId(id, userId);
 	}
-	
+
 	public int updatePost(int id, int userId, String userLoginId, String content, MultipartFile file) {
 		String imagePath = generateimagePathByFile(userLoginId, file);
 		logger.info("### 수정된 이미지 주소: " + imagePath);
@@ -60,6 +68,8 @@ public class PostBO {
 	
 	public int deletePost(int id, int userId) {
 
+		// 글에 종속된 모든 것 삭제되어야 함! (글, file, 댓글, 좋아요)
+		
 		// file 및 디렉토리 삭제
 		Post post = postDAO.selectPostByPostIdAndUserId(id, userId);
 		String oriImagePath = post.getImagePath();
@@ -71,6 +81,13 @@ public class PostBO {
 				logger.error("[파일삭제] 삭제 중 에러: " + id + " " + oriImagePath);
 			}
 		}
+		
+		// 댓글 삭제
+		commentDAO.deleteCommentByPostId(id);
+		
+		// 좋아요 삭제
+		likeDAO.deleteLikeByPostId(id);
+		
 		return postDAO.deletePost(id);
 	}
 	

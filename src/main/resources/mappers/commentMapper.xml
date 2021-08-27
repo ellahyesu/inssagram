@@ -53,7 +53,7 @@
 			`postId` = #{postId}
 	</select>
 	
-	<delete id="deleteComment" parameterType="int">
+	<delete id="deleteCommentById" parameterType="int">
 		DELETE
 		FROM
 			`comment`
@@ -61,6 +61,12 @@
 			`id` = #{id}
 	</delete>
 	
-</mapper>
- 
- 
+	<delete id="deleteCommentByPostId" parameterType="int">
+		DELETE
+		FROM
+			`comment`
+		WHERE
+			`postId` = #{postId}
+	</delete>
+
+</mapper> 
