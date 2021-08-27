@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.inssagram.follow.dao.FollowDAO">
+
+	<insert id="insertFollow" parameterType="map">
+		INSERT INTO `follow`
+		(
+			`follower`
+			, `followee`
+			, `createdAt`
+		)
+		VALUES
+		(
+			#{follower}
+			, #{followee}
+			, NOW()
+		)
+	</insert>
+	
+	<select id="selectFolloweeListByFollower" parameterType="string" resultType="com.inssagram.follow.model.Follow">
+		SELECT
+			`id`
+			, `follower`
+			, `followee`
+			, `createdAt`
+		FROM
+			`follow`
+		WHERE 
+			`follower` = #{follower}
+	</select>
+	
+	<select id="selectFollowerListByFollowee" parameterType="string" resultType="com.inssagram.follow.model.Follow">
+		SELECT
+			`id`
+			, `follower`
+			, `followee`
+			, `createdAt`
+		FROM
+			`follow`
+		WHERE 
+			`followee` = #{followee}
+	</select>
+	
+	<delete id="deleteFollow" parameterType="map">
+		DELETE
+		FROM `follow`
+		WHERE
+			`follower` = #{follower}
+			And `followee` = #{followee}
+	</delete>
+	
+</mapper>

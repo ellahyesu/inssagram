@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.inssagram.comment.bo.CommentBO;
 import com.inssagram.comment.model.Comment;
+import com.inssagram.follow.bo.FollowBO;
+import com.inssagram.follow.model.Follow;
 import com.inssagram.like.bo.LikeBO;
 import com.inssagram.like.model.Like;
 import com.inssagram.post.bo.PostBO;
@@ -31,7 +33,10 @@ public class ContentBO {
 	@Autowired
 	private LikeBO likeBO;
 	
-	public List<Content> getContentList(int userId) {
+	@Autowired
+	private FollowBO followBO;
+	
+	public List<Content> getContentList(int userId, String follower) {
 		
 		List<Content> contentList = new ArrayList<>();
 		
@@ -66,10 +71,23 @@ public class ContentBO {
 			int likeCount = likeBO.getLikeCountByPostId(postId);
 			content.setLikeCount(likeCount);
 			
+			// 나의 팔로우 여부(post의 대상 user를)
+			String userLoginId = user.getLoginId(); // post의 주인
+			List<Follow> followeeList = followBO.getFolloweeListByFollower(follower);
+			
+			content.setFollowed(false);
+			for (Follow followee : followeeList) {
+				if (followee.getFollowee() != null) {
+					if (userLoginId.equals(followee.getFollowee())) {
+						content.setFollowed(true);
+					} 
+				}
+			}
+
+			// add - content 목록
 			contentList.add(content);
 		}
 		return contentList;
 	}
-	
 	
 }

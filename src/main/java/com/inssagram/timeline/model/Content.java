@@ -21,6 +21,8 @@ public class Content { // Content 1개를 구성하고 있는 것들(글, 댓글
 	private int likeCount;
 	
 	private boolean filledLike; // userId(나) - post 좋아요
+	
+	private boolean followed; // userLoginId(나) - 다른 user follow 여부 
 
 	public User getUser() {
 		return user;
@@ -62,4 +64,12 @@ public class Content { // Content 1개를 구성하고 있는 것들(글, 댓글
 		this.filledLike = filledLike;
 	}
 
+	public boolean isFollowed() {
+		return followed;
+	}
+
+	public void setFollowed(boolean followed) {
+		this.followed = followed;
+	}
+	
 }

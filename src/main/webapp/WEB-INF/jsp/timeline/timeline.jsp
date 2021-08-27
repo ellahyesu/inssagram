@@ -3,11 +3,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<div class="d-flex justify-content-center">
-	<div>
+<div class="d-flex justify-content-around">
 	
-		<%-- 글쓰기 영역 - 로그인 된 상태에서만 보임 --%>
-		<div class="writing-box mb-4">
+	<div class="empty-box"></div>
+	
+	<div class="mr-3">
+		<%-- 글 쓰기 영역 - 로그인 된 상태에서만 보임 --%>
+		<div class="post-box mb-4">
 			<textarea class="m-3" cols="50" rows="3" name="content" placeholder="무슨 생각을 하고 계신가요?"></textarea>
 			<%-- 이미지 업로드를 위한 아이콘과 버튼 --%>
 			<div class="d-flex justify-content-between m-2">
@@ -19,7 +21,7 @@
 				<button type="button" id="writingUploadBtn" class="btn text-primary"><b>업로드</b></button>
 			</div>
 		</div>
-		
+		<%-- 글 목록 영역 - 로그인 된 상태에서만 보임 --%>
 		<c:forEach var="content" items="${contentList}">
 			<div class="post-box mt-4">
 				<div class="d-flex justify-content-between post-header m-2">
@@ -29,24 +31,41 @@
 							<div><img src="${content.user.profileImageFile}" class="profile-image mr-2"></div>
 						</c:if>
 						<c:if test="${empty content.user.profileImageFile}">
-							<div><i id="userIcon" class="d-flex justify-content-center align-items-center fas fa-user profile-image mr-2"></i></div>
+							<div>
+								<i id="userIcon" class="d-flex justify-content-center align-items-center fas fa-user profile-image mr-2"></i>
+							</div>
 						</c:if>
 								
 						<div class="d-flex align-items-center"><b>${content.post.userName}</b></div>
 						
 						<%-- 글쓴이가 본인이 아니면 팔로우 버튼 노출 --%>
 						<c:if test="${userName ne content.user.name}">
-							<%-- TODO: 팔로우를 한 사람이면 팔로우 취소 버튼 노출 --%>
+							<%-- TODO: 이미 팔로우를 한 사람이면 팔로우 취소 버튼 노출 --%>
 							
-							<a href="#" class="ml-2 d-flex align-items-center text-primary"><b>· 팔로우</b></a>
+							<c:if test="${content.followed eq true}">
+								<a href="#" class="follow-cancel-btn ml-2 d-flex align-items-center text-danger" data-followee="${content.user.loginId}">
+									<b>· 팔로우 취소</b>
+								</a>
+							</c:if>
+							<c:if test="${content.followed eq false}">
+								<a href="#" class="follow-btn ml-2 d-flex align-items-center text-primary" data-followee="${content.user.loginId}">
+									<b>· 팔로우</b>
+								</a>
+							</c:if>
 						</c:if>
 					</div>
+					
 					<%-- 본인이면 글 수정, 글삭제 버튼 노출 --%>
 					<c:if test="${userName eq content.user.name}">
 					<div>
-						<a href="/post/post_detail_view?id=${content.post.id}"><button type="button" id="editBtn" class="btn"><i class="fas fa-edit"></i></button></a>
+						<a href="/post/post_detail_view?id=${content.post.id}">
+							<button type="button" id="editBtn" class="btn"><i class="fas fa-edit"></i>
+							</button>
+						</a>
 						<%-- Modal --%>
-						<button type="button" class="btn delete-icon" data-toggle="modal" data-target="#deleteModal" data-post-id="${content.post.id}"><i class="far fa-trash-alt"></i></button>
+						<button type="button" class="btn delete-icon" data-toggle="modal" data-target="#deleteModal" data-post-id="${content.post.id}">
+							<i class="far fa-trash-alt"></i>
+						</button>
 					</div>
 					</c:if>
 				</div>
@@ -101,9 +120,37 @@
 			</div>
 		</c:forEach>
 	</div>
+	
+	<%-- 나의 팔로우 목록 --%>
+	<div class="follow-box">
+		<div class="d-flex justify-content-between">
+			<%-- 팔로워 --%>
+			<div id="followerBox" class="w-100">
+				<button type="button" id="followerShowBtn" class="btn w-100 mt-2 text-center text-primary"><b>팔로워</b></button>
+				<div id="followerList">
+					<c:forEach var="follower" items="${followerList}">
+						<div class="text-center">
+							<b>${follower.follower}</b>
+						</div>	
+					</c:forEach>
+				</div>
+			</div>
+			<%-- 팔로잉 --%>
+			<div id="followeeBox" class="w-100">
+				<button type="button" id="followeeShowBtn" class="btn w-100 mt-2 text-center text-primary"><b>팔로잉</b></button>
+				<div id="followeeList">
+					<c:forEach var="followee" items="${followeeList}">
+						<div class="text-center">
+							<b>${followee.followee}</b>
+						</div>	
+					</c:forEach>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
-<!-- more btn 3개씩 더 보이게 -->
+<!-- 더보기 버튼(3개씩 더 보이게) -->
 <div id="moreArea" class="mt-3 d-flex justify-content-center">
 	<button type="button" id="moreBtn" class="btn"><i class="fas fa-chevron-circle-down more-btn"></i></button>
 </div>
@@ -281,11 +328,12 @@
 		// 좋아요 누르기
 		$('.post-like-btn').on('click', function() {
 			
+			let postId = $(this).data('post-id');
 			$.ajax({
-				url: '/like/create'
+				url: '/like/' + postId
 				, method: 'post'
 				, data: {
-					"postId" : $(this).data('post-id')
+					"postId" : postId
 				}, success: function(data) {
 					if (data.result == 'success') {
 						alert("좋아요!");
@@ -316,8 +364,52 @@
 			});
 		});
 		
+		// follow 하기
+		$('.follow-btn').on('click', function(e) {
+			e.preventDefault();
+			
+			let followee = $(this).data('followee');
+			// alert(followee);
+			$.ajax({
+				url: '/follow/create'
+				, method: 'post'
+				, data: {
+					"followee" : followee
+				}, success: function(data) {
+					// alert(data);
+					if (data.result == 'success') {
+						alert("follow!");
+						location.reload();
+					}
+				}, error: function(e) {
+					alert("follow에 실패했습니다. 관리자에게 문의해주세요.");
+				}
+			});
+		});
+		
+		// follow 취소하기
+		$('.follow-cancel-btn').on('click', function(e) {
+			e.preventDefault();
+			
+			let followee = $(this).data('followee');
+			// alert(followee);
+			$.ajax({
+				url: '/follow/delete'
+				, method: 'post'
+				, data: {
+					"followee" : followee
+				}, success: function(data) {
+					if (data.result == 'success') {
+						alert("follow를 취소 하였습니다.");
+						location.reload();
+					}
+				}, error: function(e) {
+					alert("follow 취소에 실패했습니다. 관리자에게 문의해주세요.");
+				}
+			});
+		});
+		
+		// 더보기 버튼
 		
 	});
-
-
 </script>

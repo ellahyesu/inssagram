@@ -99,10 +99,6 @@ header {
 }
 
 /* section - 글 쓰기 */
-.writing-box {
-	width:470px;
-	border: 2px solid #E7E9EC;
-}
 textarea {
     border: none;
     background-color: transparent;
@@ -120,6 +116,9 @@ textarea {
 }
 
 /* section - 글 목록 */
+.empty-box {
+	width:300px;
+}
 .post-box {
 	width:470px;
 	border: 2px solid #E7E9EC;
@@ -127,6 +126,32 @@ textarea {
 .post-image {
 	width:450px;
 	height:400px;
+}
+
+/* aside - follow 목록 */
+.follow-box {
+	width:300px;
+	height:130px;
+	border: 2px solid #E7E9EC;
+	overflow: auto;
+}
+#followeeBox {
+	width:150px;
+}
+#followerBox {
+	width:150px;
+}
+#followerShowBtn, #followeeShowBtn {
+	background-color:transparent;
+}
+.follow-box::-webkit-scrollbar {
+   	width: 10px;
+}
+.follow-box::-webkit-scrollbar-thumb {
+  	background-color: #F5CF75;
+}
+.follow-box::-webkit-scrollbar-track {
+	background-color: grey;
 }
 
 /* section - 글 수정, 글 삭제 */
