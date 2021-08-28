@@ -72,6 +72,49 @@
 		ORDER BY `id` DESC
 	</select>
 	
+	<select id="selectPostListByLimit" parameterType="map" resultType="com.inssagram.post.model.Post">
+		SELECT
+			`id`
+			, `userId`
+			, `userName`
+			, `content`
+			, `imagePath`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`post`
+			<!-- 페이징이 없는 경우(첫 페이지) -->
+			<if test="direction == null">
+		ORDER BY `id` DESC	
+			</if>
+			
+			<!-- 이전 버튼을 클릭했을 때 -->
+			<if test="direction == 'prev'">
+			<![CDATA[
+		WHERE `id` > #{standardId}
+			]]>
+		ORDER BY `id` ASC
+			</if>
+			
+			<!-- 다음 버튼을 클릭했을 때 -->
+			<if test="direction == 'next'">
+			<![CDATA[
+		WHERE `id` < #{standardId}
+			]]>
+		ORDER BY `id` DESC	
+			</if>
+		LIMIT ${limit}
+	</select>
+	
+	<select id="selectPostIdBySort" parameterType="string" resultType="int">
+		SELECT
+			`id`
+		FROM
+			`post`
+		ORDER BY `id` ${sort}
+		LIMIT 1
+	</select>
+	
 	<update id="updatePost" parameterType="map">
 		UPDATE `post`
 		SET 

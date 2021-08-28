@@ -29,7 +29,9 @@
 		<section>
 			<div class="d-flex justify-content-center">
 				<div class="col-4">
-					<h1 class="logo text-center mt-3 mb-3">Inssagram</h1>
+					<div class="logo">
+						<h1 class="logo text-center mt-3 mb-3">Inssagram</h1>
+					</div>
 					<form id="loginForm" method="post" action="/user/sign_in">
 						<input type="text" id="loginId" name="loginId" class="form-control" placeholder="아이디">
 						<input type="password" id="password" name="password" class="mt-2 form-control" placeholder="비밀번호">

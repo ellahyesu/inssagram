@@ -150,11 +150,21 @@
 	</div>
 </div>
 
+<div class="mt-5 d-flex justify-content-center">
+	<c:if test="${prevId ne 0}">
+		<a href="/timeline/timeline_view?prevId=${prevId}" class="prev-btn mr-5"><i class="fas fa-chevron-circle-left"></i></a>
+	</c:if>
+	<c:if test="${nextId ne 0}">
+		<a href="/timeline/timeline_view?nextId=${nextId}" class="next-btn"><i class="fas fa-chevron-circle-right"></i></a>
+	</c:if>
+</div>
+		
 <!-- 더보기 버튼(3개씩 더 보이게) -->
+<!-- 
 <div id="moreArea" class="mt-3 d-flex justify-content-center">
 	<button type="button" id="moreBtn" class="btn"><i class="fas fa-chevron-circle-down more-btn"></i></button>
 </div>
-
+ -->
 <!-- Modal -->
 <div class="modal" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">

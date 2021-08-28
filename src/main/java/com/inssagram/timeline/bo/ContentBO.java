@@ -12,7 +12,6 @@ import com.inssagram.follow.bo.FollowBO;
 import com.inssagram.follow.model.Follow;
 import com.inssagram.like.bo.LikeBO;
 import com.inssagram.like.model.Like;
-import com.inssagram.post.bo.PostBO;
 import com.inssagram.post.model.Post;
 import com.inssagram.timeline.model.Content;
 import com.inssagram.user.bo.UserBO;
@@ -23,10 +22,7 @@ public class ContentBO {
 
 	@Autowired
 	private UserBO userBO;
-	
-	@Autowired
-	private PostBO postBO;
-	
+
 	@Autowired
 	private CommentBO commentBO;
 	
@@ -36,12 +32,13 @@ public class ContentBO {
 	@Autowired
 	private FollowBO followBO;
 	
-	public List<Content> getContentList(int userId, String follower) {
+	public List<Content> getContentList(
+			int userId
+			, String follower
+			, List<Post> postList) {
 		
 		List<Content> contentList = new ArrayList<>();
 		
-		// Post 목록
-		List<Post> postList = postBO.getPostList();
 		for (Post post : postList) {
 			Content content = new Content();
 			content.setPost(post);

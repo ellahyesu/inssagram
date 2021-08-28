@@ -29,7 +29,9 @@
 		<section>
 			<div class="d-flex justify-content-center">
 				<div class="col-4">
-					<h1 class="logo text-center mt-3 mb-3">Inssagram</h1>
+					<div class="logo">
+						<h1 class="logo text-center mt-3 mb-3">Inssagram</h1>
+					</div>
 					<h6 class="text-center text-secondary font-weight-bold mt-3">친구들의 일상이 궁금하다면 가입하세요.</h6>
 				
 					<form id="signUpForm" method="post" action="/user/sign_up_for_ajax">

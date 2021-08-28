@@ -1,6 +1,7 @@
 package com.inssagram.post.bo;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -19,7 +20,8 @@ import com.inssagram.post.model.Post;
 public class PostBO {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
-
+	private static final int POST_MAX_SIZE = 3;
+	
 	@Autowired
 	private PostDAO postDAO;
 	
@@ -50,6 +52,41 @@ public class PostBO {
 		return postDAO.selectPostByPostIdAndUserId(id, userId);
 	}
 
+	// 페이징
+	public List<Post> getPostListByLimit(Integer prevId, Integer nextId) {
+		
+		String direction = null;
+		Integer standardId = null;
+		
+		if (prevId != null) {
+			direction = "prev";
+			standardId = prevId;
+			
+			List<Post> postList = postDAO.selectPostListByLimit(direction, standardId, POST_MAX_SIZE);
+			// 정렬을 뒤집어야 함.
+			Collections.reverse(postList);
+			return postList;
+		} else if (nextId != null) {
+			direction = "next";
+			standardId = nextId;
+		}
+		
+		return postDAO.selectPostListByLimit(direction, standardId, POST_MAX_SIZE);
+	}
+	
+	// 가장 오른쪽 페이지인가?
+	public boolean isLastPage(int nextId) {
+		// 게시글 번호 10 9 8 | 7 6 5 | 4 3 2 | 1 
+		// 1
+		return nextId == postDAO.selectPostIdBySort("ASC"); // postId == nextId
+	}
+
+	// 가장 왼쪽 페이지인가?
+	public boolean isFirstPage(int prevId) {
+		// 10
+		return prevId == postDAO.selectPostIdBySort("DESC");
+	}
+		
 	public int updatePost(int id, int userId, String userLoginId, String content, MultipartFile file) {
 		String imagePath = generateimagePathByFile(userLoginId, file);
 		logger.info("### 수정된 이미지 주소: " + imagePath);

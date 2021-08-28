@@ -24,6 +24,14 @@ public interface PostDAO {
 			@Param("id") int id
 			, @Param("userId") int userId);
 	
+	public List<Post> selectPostListByLimit(
+			@Param("direction") String direction
+			, @Param("standardId") Integer standardId
+			, @Param("limit") int limit);
+	
+	public int selectPostIdBySort(
+			@Param("sort") String sort);
+	
 	public int updatePost(
 			@Param("id") int id
 			, @Param("userId") int userId
