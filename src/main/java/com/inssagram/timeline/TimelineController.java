@@ -17,6 +17,8 @@ import com.inssagram.post.bo.PostBO;
 import com.inssagram.post.model.Post;
 import com.inssagram.timeline.bo.ContentBO;
 import com.inssagram.timeline.model.Content;
+import com.inssagram.user.bo.UserBO;
+import com.inssagram.user.model.User;
 
 @RequestMapping("/timeline")
 @Controller
@@ -30,6 +32,9 @@ public class TimelineController {
 	
 	@Autowired
 	private FollowBO followBO;
+	
+	@Autowired
+	private UserBO userBO;
 	
 	@RequestMapping("/timeline_view")
 	public String timelineView(
@@ -74,6 +79,10 @@ public class TimelineController {
 		// 나를 follow하는 대상의 목록
 		List<Follow> followerList = followBO.getFollowerListByFollowee(follower);
 		model.addAttribute("followerList", followerList);
+		
+		// header 프로필 사진을 띄우기 위해 user 넘겨줌 
+		User user = userBO.getUserByLoginId(follower);
+		model.addAttribute("user", user);
 		
 		model.addAttribute("viewName", "timeline/timeline");
 		return "template/layout";

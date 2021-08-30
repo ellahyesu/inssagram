@@ -21,26 +21,17 @@
 				<%-- Modal --%>
 				<div class="d-flex">
 					<input type="file" id="profileEditfile" name="profileEditfile" class="d-none" accept=".jpg, .jpeg, .gif, .png">
-					<c:set var="loop_flag" value="false" />
-					<c:forEach var="content" items="${contentList}">
-						<c:if test="${not loop_flag}">
-							<c:if test="${userId eq content.user.id}">
-								<c:if test="${not empty content.user.profileImageFile}">
-									<a href="#" id="profileEditLink" class="btn" data-toggle="modal" data-target="#profileEditModal" data-user-id="${userId}">
-										<img src="${content.user.profileImageFile}" class="profile-image">
-									</a>
-									<c:set var="loop_flag" value="true" />
-								</c:if>
-								<c:if test="${empty content.user.profileImageFile}">
-									<a href="#" id="profileEditLink" class="empty-profile btn" data-toggle="modal" data-target="#profileEditModal" data-user-id="${userId}">
-										<i id="userIcon" class="d-flex justify-content-center align-items-center fas fa-user profile-image"></i>
-									</a>
-									<c:set var="loop_flag" value="true" />
-								</c:if>
-							</c:if>
-						</c:if>
-					</c:forEach>
-					<c:set var="loop_flag" value="false" />
+								
+					<c:if test="${not empty user.profileImageFile}">
+						<a href="#" id="profileEditLink" class="btn" data-toggle="modal" data-target="#profileEditModal" data-user-id="${userId}">
+							<img src="${user.profileImageFile}" class="profile-image">
+						</a>
+					</c:if>
+					<c:if test="${empty user.profileImageFile}">
+						<a href="#" id="profileEditLink" class="empty-profile btn" data-toggle="modal" data-target="#profileEditModal" data-user-id="${userId}">
+							<i id="userIcon" class="d-flex justify-content-center align-items-center fas fa-user profile-image"></i>
+						</a>
+					</c:if>
 				</div>
 			</div>
 			<div class="d-flex align-items-end mb-2">
