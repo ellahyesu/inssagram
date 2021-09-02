@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.inssagram.post.dao.PostDAO">
+
+	<insert id="insertPost" parameterType="map">
+		INSERT INTO `post`
+		(
+			`userId`
+			, `userName`
+			, `content`
+			, `imagePath`
+			, `createdAt`
+			, `updatedAt`
+		)
+		VALUES
+		(
+			#{userId}
+			, #{userName}
+			, #{content}
+			, #{imagePath}
+			, NOW()
+			, NOW()
+		)
+	</insert>
+
+	<select id="selectPostList" resultType="com.inssagram.post.model.Post">
+		SELECT
+			`id`
+			, `userId`
+			, `userName`
+			, `content`
+			, `imagePath`
+			, `createdAt`
+			, `updatedAt`
+		FROM 
+			`post`
+		ORDER BY `id` DESC
+	</select>
+	
+	<select id="selectPostListByUserId" parameterType="int" resultType="com.inssagram.post.model.Post">
+		SELECT
+			`id`
+			, `userId`
+			, `userName`
+			, `content`
+			, `imagePath`
+			, `createdAt`
+			, `updatedAt`
+		FROM 
+			`post`
+		WHERE 
+			`userId` = #{userId}
+		ORDER BY `id` DESC
+	</select>
+
+	<select id="selectPostByPostIdAndUserId" parameterType="map" resultType="com.inssagram.post.model.Post">
+		SELECT
+			`id`
+			, `userId`
+			, `userName`
+			, `content`
+			, `imagePath`
+			, `createdAt`
+			, `updatedAt`
+		FROM 
+			`post`
+		WHERE 
+			`id` = #{id}
+			AND `userId` = #{userId}
+		ORDER BY `id` DESC
+	</select>
+	
+	<select id="selectPostListByLimit" parameterType="map" resultType="com.inssagram.post.model.Post">
+		SELECT
+			`id`
+			, `userId`
+			, `userName`
+			, `content`
+			, `imagePath`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`post`
+			<!-- 페이징이 없는 경우(첫 페이지) -->
+			<if test="direction == null">
+		ORDER BY `id` DESC	
+			</if>
+			
+			<!-- 이전 버튼을 클릭했을 때 -->
+			<if test="direction == 'prev'">
+			<![CDATA[
+		WHERE `id` > #{standardId}
+			]]>
+		ORDER BY `id` ASC
+			</if>
+			
+			<!-- 다음 버튼을 클릭했을 때 -->
+			<if test="direction == 'next'">
+			<![CDATA[
+		WHERE `id` < #{standardId}
+			]]>
+		ORDER BY `id` DESC	
+			</if>
+		LIMIT ${limit}
+	</select>
+	
+	<select id="selectPostIdBySort" parameterType="string" resultType="int">
+		SELECT
+			`id`
+		FROM
+			`post`
+		ORDER BY `id` ${sort}
+		LIMIT 1
+	</select>
+	
+	<update id="updatePost" parameterType="map">
+		UPDATE `post`
+		SET 
+			`content` = #{content}
+			, `updatedAt` = NOW()
+			<!-- imagePath가 null이 아닐 때만 수정한다. -->
+			<if test="imagePath != null">
+			, `imagePath` = #{imagePath}
+			</if>
+		WHERE
+			`id` = #{id}
+			AND `userId` = #{userId} 
+	</update>
+
+	<delete id="deletePost" parameterType="int">
+		DELETE
+		FROM `post`
+		WHERE
+			`id` = #{id}
+	</delete>
+	
+</mapper>

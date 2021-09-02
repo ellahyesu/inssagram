@@ -1,0 +1,238 @@
+@charset "UTF-8";
+
+* {
+	font-family: 'Noto Sans KR', sans-serif;
+}
+a, a:hover {
+	text-decoration:none;
+	color: inherit;
+}
+
+/* 회원가입 - 아이디 중복 체크 */
+#idCheckBtn {
+	background-color:transparent;
+}
+
+/* header - 로고, 검색, 프로필사진, 로그인여부 */
+header {
+	height:100px;
+}
+.logo {
+	font-family: 'Leckerli One', cursive;
+	font-size:50px;
+	
+	background: linear-gradient(to right top, #F5CF75, #ED4956, #8239C1);
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+}
+.logo:hover {
+	background: linear-gradient(to right top, #F5CF75, #ED4956, #8239C1);
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    
+    transform: rotate(10deg);
+}
+#searchBar {
+	height:50px;
+}
+#searchWordBtn {
+	background-color: #ED4956;
+	color:white;
+}
+
+/* header - 프로필사진 */
+.empty-profile {
+	background-color: transparent;
+}
+#userIcon {
+	color:#6C757D;
+}
+.profile-image {
+	width:50px;
+	height:50px;
+	border-radius:50%;
+	border: 3px solid transparent;
+	background-image: linear-gradient(white, white), linear-gradient(to right top, #F5CF75, #ED4956, #8239C1);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+}
+.mypage-profile-image {
+	width:100px;
+	height:100px;
+	border-radius:50%;
+	border: 3px solid transparent;
+	background-image: linear-gradient(white, white), linear-gradient(to right top, #F5CF75, #ED4956, #8239C1);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+}
+
+/* header - 로그인 여부 */
+#logout:hover {
+	color:#ED4956;
+}
+
+/* gnb */
+.nav-bar {
+	height:50px;
+}
+.user-login-id {
+	font-size:20px;
+}
+
+/* mypage */
+.mypage-image {
+	width:140px;
+	height:140px;
+}
+#profileEdit {
+	width:95%;
+	background-color: transparent;
+	border: 1px solid #E7E9EC;
+}
+#profileEdit:hover {
+	background-color: black;
+	color: white;
+}
+.mypage-post-box {
+	width:470px;
+	border: 2px solid #E7E9EC;
+}
+
+/* section - 글 쓰기 */
+textarea {
+    border: none;
+    background-color: transparent;
+    resize: none;
+    outline: none;
+}
+#imageUploadIcon {
+	font-size:20px;
+}
+#imageUploadBtn {
+	background-color: transparent;
+}
+#writingUploadBtn {
+	background-color:transparent;
+}
+
+/* section - 글 목록 */
+.empty-box {
+	width:300px;
+}
+.post-box {
+	width:470px;
+	border: 2px solid #E7E9EC;
+}
+.post-image {
+	width:450px;
+	height:400px;
+}
+
+/* aside - follow 목록 */
+.follow-box {
+	width:300px;
+	height:130px;
+	border: 2px solid #E7E9EC;
+	overflow: auto;
+}
+#followeeBox {
+	width:150px;
+}
+#followerBox {
+	width:150px;
+}
+#followerShowBtn, #followeeShowBtn {
+	background-color:transparent;
+}
+.follow-box::-webkit-scrollbar {
+   	width: 10px;
+}
+.follow-box::-webkit-scrollbar-thumb {
+  	background-color: #F5CF75;
+}
+.follow-box::-webkit-scrollbar-track {
+	background-color: grey;
+}
+
+/* section - 글 수정, 글 삭제 */
+#editBtn {
+	background-color:transparent;
+}
+.post-edit-image {
+	width:130px;
+	height:130px;
+}
+.delete-icon {
+	background-color:transparent;
+	color:red;
+}
+
+/* section - 글 - 좋아요 */
+.post-mylike-btn {
+	background-color:transparent;
+	color: #ED4956;
+}
+.post-like-btn {
+	background-color:transparent;
+}
+
+/* section - 글 - 댓글 */
+.comment-btn{
+	background-color:transparent;
+}
+.comment-del-btn {
+	background-color:transparent;
+	font-size:12px;
+	color:red;
+}
+
+/* section - (하단)더보기 버튼 */
+@keyframes motion {
+	0% {margin-top: 0px;}
+	50% {margin-top: 5px;}
+}
+.prev-btn, .next-btn {
+	position: relative;
+	font-size:28px;
+
+	background: linear-gradient(to right top, #F5CF75, #ED4956, #8239C1);
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+}
+.prev-btn:hover, .next-btn:hover {
+	position: relative;
+	font-size:28px;
+
+	background: linear-gradient(to right top, #F5CF75, #ED4956, #8239C1);
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    transform: scale(1.3);
+}
+.more-btn {
+	position: relative;
+	
+	animation: motion 0.7s linear 0s infinite alternate; margin-top: 0;
+	-webkit-animation: motion 0.7s linear 0s infinite alternate; margin-top: 0;
+	font-size:28px;
+
+	background: linear-gradient(to right top, #F5CF75, #ED4956, #8239C1);
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+}
+#moreArea{
+	height: 30px;
+}
+#moreBtn {
+	background-color: transparent;
+	position: absolute;
+}
+
+/* footer */
+footer {
+	height:100px;
+}
